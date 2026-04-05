@@ -182,7 +182,27 @@ function isProductInCart(carts, productId) {
  * 如果產品已存在，合併數量；如果不存在，新增一筆
  */
 function addToCart(carts, product, quantity) {
-  // 請實作此函式
+  // 請實作此函式 
+  let newCart = []
+  const { id: productId } = product.id
+  if (isProductInCart(carts, productId)) {
+    newCart = carts.map(item => {
+      if (item.product.id === productId) {
+        productInCart.quantity += quantity
+      }
+    })
+  } else {
+    newCart = [
+      ...carts,
+      {
+        id: `cart-${carts.length + 1}`,
+        product,
+        quantity
+      }
+    ]
+  }
+
+  return newCart
 }
 
 /**
@@ -194,6 +214,17 @@ function addToCart(carts, product, quantity) {
  */
 function updateCartItemQuantity(carts, cartId, newQuantity) {
   // 請實作此函式
+  const cart = carts.find(item => item.id === cartId)
+  if (!cart) {
+    console.log('該項目不存在')
+    return
+  }
+  if (newQuantity <= 0) {
+    return carts.filter(item => item.id !== cartId)
+  }
+  cart.quantity = newQuantity
+
+  return carts
 }
 
 /**
@@ -204,6 +235,13 @@ function updateCartItemQuantity(carts, cartId, newQuantity) {
  */
 function removeFromCart(carts, cartId) {
   // 請實作此函式
+  const newCarts = carts.filter(item => item.id !== cartId)
+  if (newCarts.length === 0) {
+    console.log('該項目不存在')
+    return
+  }
+
+  return newCarts
 }
 
 /**
@@ -212,6 +250,8 @@ function removeFromCart(carts, cartId) {
  */
 function clearCart() {
   // 請實作此函式
+  carts.length = 0
+  return carts
 }
 
 // ========================================
