@@ -57,6 +57,9 @@ const orders = [
  */
 function getProductById(products, productId) {
   // 請實作此函式
+  const product = products.find(item => item.id === productId)
+
+  return product || null
 }
 
 /**
@@ -67,6 +70,11 @@ function getProductById(products, productId) {
  */
 function getProductsByCategory(products, category) {
   // 請實作此函式
+  if (category === '全部') {
+    return products
+  }
+  const productsByCategory = products.filter(item => item.category === category)
+  return productsByCategory
 }
 
 /**
@@ -77,6 +85,10 @@ function getProductsByCategory(products, category) {
  */
 function getDiscountRate(product) {
   // 請實作此函式
+  const { price, origin_price } = product
+  const rate = Math.round((price / origin_price) * 100)
+
+  return rate % 10 === 0 ? `${rate / 10}折` : `${rate}折`
 }
 
 /**
@@ -86,6 +98,8 @@ function getDiscountRate(product) {
  */
 function getAllCategories(products) {
   // 請實作此函式
+  const categories = products.map(item => item.category)
+  return [...new Set(categories)]
 }
 
 // ========================================
