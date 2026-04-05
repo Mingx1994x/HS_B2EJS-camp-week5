@@ -113,6 +113,10 @@ function getAllCategories(products) {
  */
 function calculateCartOriginalTotal(carts) {
   // 請實作此函式
+  return carts.reduce((acc, item) => {
+    const { quantity, product } = item
+    return acc + product.origin_price * quantity
+  }, 0)
 }
 
 /**
@@ -122,6 +126,10 @@ function calculateCartOriginalTotal(carts) {
  */
 function calculateCartTotal(carts) {
   // 請實作此函式
+  return carts.reduce((acc, item) => {
+    const { quantity, product } = item
+    return acc + product.price * quantity
+  }, 0)
 }
 
 /**
@@ -131,6 +139,10 @@ function calculateCartTotal(carts) {
  */
 function calculateSavings(carts) {
   // 請實作此函式
+  return carts.reduce((acc, item) => {
+    const { quantity, product } = item
+    return acc + ((product.origin_price - product.price) * quantity)
+  }, 0)
 }
 
 /**
@@ -140,6 +152,10 @@ function calculateSavings(carts) {
  */
 function calculateCartItemCount(carts) {
   // 請實作此函式
+  return carts.reduce((acc, item) => {
+    const { quantity } = item
+    return acc + quantity
+  }, 0)
 }
 
 /**
@@ -150,6 +166,7 @@ function calculateCartItemCount(carts) {
  */
 function isProductInCart(carts, productId) {
   // 請實作此函式
+  return carts.some(item => item.product.id === productId)
 }
 
 // ========================================
